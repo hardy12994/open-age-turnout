@@ -1,10 +1,10 @@
-import { AmsAdminPage } from './app.po';
+import { TrunoutPage } from './app.po';
 
-describe('ams-admin App', () => {
-  let page: AmsAdminPage;
+describe('trunout App', () => {
+  let page: TrunoutPage;
 
   beforeEach(() => {
-    page = new AmsAdminPage();
+    page = new TrunoutPage();
   });
 
   it('should display message saying app works', () => {

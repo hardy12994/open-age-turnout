@@ -1,6 +1,6 @@
 import { browser, by, element } from 'protractor';
 
-export class AmsAdminPage {
+export class TrunoutPage {
   navigateTo() {
     return browser.get('/');
   }
