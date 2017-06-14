@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<div>
+
+    <md-card class="card">
+
+        <md-card-title>Login</md-card-title>
+        <div id="cardFields">
+            <div>
+                <md-input-container>
+                    <input mdInput placeholder="Username" [(ngModel)]="email">
+                </md-input-container>
+            </div>
+            <div>
+                <md-input-container>
+                    <input mdInput placeholder="Passcode" [(ngModel)]="password">
+                </md-input-container>
+            </div>
+        </div>
+        <button md-raised-button id="login" (click)="login()">Sign in</button>
+
+        <a href="#">Forgot Passcode ?</a>
+    </md-card>
+</div>

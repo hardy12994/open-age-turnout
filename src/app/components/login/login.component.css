@@ -1,0 +1,30 @@
+#login {
+    font-size: 20px;
+    text-align: center;
+    margin: 20px;
+    padding: 0px 15px 0px 15px;
+    background-color: gainsboro;
+    color: black;
+    border-radius: 5px;
+    border-style: solid;
+    /*border-color: #00b8e6;*/
+    border-color: gainsboro;
+    ;
+}
+
+#fp {
+    font-size: 15px;
+}
+
+#cardFields {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.mat-card {
+    width: 30%;
+    position: fixed;
+    top: 30%;
+    right: 0%;
+    margin-right: 20px;
+}
