@@ -5,6 +5,6 @@ export class Employee {
   code: string;
   email: string;
   token: string;
-  // password: string;
+  password: string;
   phone?: string;
 }

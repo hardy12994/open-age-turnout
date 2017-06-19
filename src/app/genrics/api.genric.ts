@@ -11,14 +11,8 @@ import { ApiInterface } from '../helpers/api.helper';
 
 export class ApiGenric<DataModel> implements ApiInterface<DataModel> {
 
-    // private apiName
 
-    // private token
-
-    constructor(private apiName: string, private http: Http, private token?: string) {
-        // this.apiName=apiName;
-        // this.http = Http;
-        // this.token = token; 
+    constructor(private apiName: string, private apiOf:String, private http: Http, private token?: string) {
         console.log(this.http);
     }
 
@@ -85,7 +79,7 @@ export class ApiGenric<DataModel> implements ApiInterface<DataModel> {
     }
 
     post(model: DataModel): Promise<DataModel> {
-        return this.http.post(`/api/${this.apiName}`, model)
+        return this.http.post(`${this.apiOf}/api/${this.apiName}`, model)
             .toPromise()
             .then(response => {
                 const res = response.json();
@@ -94,7 +88,7 @@ export class ApiGenric<DataModel> implements ApiInterface<DataModel> {
                 }
 
                 if (!res.isSuccess) {
-                    throw res.message;
+                    throw res.message || res.error;
                 }
 
                 if (res.isSuccess) {

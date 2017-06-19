@@ -9,17 +9,21 @@ import { LoginService } from '../../services/login.service';
   providers: [LoginService]
 })
 export class LoginComponent implements OnInit {
-  email
-  password
-  constructor(private loginService: LoginService) { }
+
+  employee;
+
+  constructor(private loginService: LoginService) {
+    console.log(this.employee);    
+    this.employee= new Employee();
+    console.log(this.employee);
+  }
 
   ngOnInit() { }
 
-  login(model: Employee) {
-    this.loginService.employee.post(model)
+  login() {
+    this.loginService.employeeApis.post(this.employee)
       .then(data => console.log(data))
       .catch(err => console.log(err));
-
   }
-
 }
+
