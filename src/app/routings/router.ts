@@ -1,4 +1,3 @@
-
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import {
@@ -7,9 +6,11 @@ import {
     NotFound404Component
 } from '../helpers/components.helpers';
 
- const appRoutes: Routes = [
+const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'dashboard', component: DashboardComponent },
+    { path: '', redirectTo: '/login',pathMatch:'full' },
+    { path: '**', component: NotFound404Component }
 ];
 
 @NgModule({

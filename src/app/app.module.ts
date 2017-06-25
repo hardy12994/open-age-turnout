@@ -8,6 +8,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppRoutingModule} from './routings/router';
 
 //Components
+import { AppComponent } from './components/app/app.component';
+
 import {
   DashboardComponent,
   LoginComponent,
@@ -26,12 +28,13 @@ import {
     BrowserAnimationsModule
   ], 
   declarations: [
+    AppComponent,    
     LoginComponent,
     DashboardComponent,
     NotFound404Component
   ],
 
   providers: [],
-  bootstrap: [LoginComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
