@@ -1,0 +1,25 @@
+.mat-card {
+    width: 30%;
+    position: fixed;
+    top: 30%;
+    right: 2%;
+    margin-right: 20px;
+}
+
+#getStart {
+    font-size: 17px;
+    text-align: center;
+    margin: 20px;
+    padding: 0px 100px 0px 100px;
+    background-color: #3f51b5;
+    color: wheat;
+    /*border-radius: 5px;*/
+    border-style: solid;
+    /*border-color: #00b8e6;*/
+    border-color: #3f51b5;
+}
+
+
+/*.getstart {
+    color: 
+}*/

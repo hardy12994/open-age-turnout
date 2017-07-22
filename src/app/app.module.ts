@@ -9,12 +9,12 @@ import { AppRoutingModule} from './routings/router';
 
 //Components
 import { AppComponent } from './components/app/app.component';
-
-import {
-  DashboardComponent,
-  LoginComponent,
-  NotFound404Component
-} from './helpers/components.helpers';
+import { LoginComponent } from './components/login/login.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { NotFound404Component } from './components/not-found404/not-found404.component';
+import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { GetStartedComponent } from './components/get-started/get-started.component';
+import { HomeComponent } from './components/home/home.component';
 
 
 
@@ -31,7 +31,10 @@ import {
     AppComponent,    
     LoginComponent,
     DashboardComponent,
-    NotFound404Component
+    NotFound404Component,
+    SignUpComponent,
+    GetStartedComponent,
+    HomeComponent
   ],
 
   providers: [],

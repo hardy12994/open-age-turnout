@@ -9,10 +9,10 @@ import { ApiInterface } from '../helpers/api.helper';
 
 @Injectable()
 
-export class ApiGenric<DataModel> implements ApiInterface<DataModel> {
+export class ApiGeneric<DataModel> implements ApiInterface<DataModel> {
 
 
-    constructor(private apiName: string, private apiOf:String, private http: Http, private token?: string) {
+    constructor(private apiName: string, private http: Http, private token?: string) {
         console.log(this.http);
     }
 
@@ -79,7 +79,7 @@ export class ApiGenric<DataModel> implements ApiInterface<DataModel> {
     }
 
     post(model: DataModel): Promise<DataModel> {
-        return this.http.post(`${this.apiOf}/api/${this.apiName}`, model)
+        return this.http.post(`/api/${this.apiName}`, model)
             .toPromise()
             .then(response => {
                 const res = response.json();

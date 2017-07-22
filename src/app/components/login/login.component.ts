@@ -22,12 +22,12 @@ export class LoginComponent implements OnInit {
   ngOnInit() { }
 
   login() {
-    this.loginService.employeeApis.post(this.employee)
+    this.loginService.employee.post(this.employee)
       .then(data => {
         console.log(data)
-        if (data.isSuccess) {
-          this.router.navigate(['/dashboard']);
-        }
+        // if (data.isSuccess) {
+          // this.router.navigate(['/dashboard']);
+        // }
       })
       .catch(err => console.log(err));
   }

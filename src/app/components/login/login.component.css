@@ -1,15 +1,14 @@
 #login {
-    font-size: 20px;
+    font-size: 17px;
     text-align: center;
-    margin: 20px;
-    padding: 0px 15px 0px 15px;
-    background-color: gainsboro;
-    color: black;
-    border-radius: 5px;
+    margin: 10px;
+    padding: 0px 25px 0px 25px;
+    background-color: #3f51b5;
+    color: wheat;
+    /*border-radius: 5px;*/
     border-style: solid;
     /*border-color: #00b8e6;*/
-    border-color: gainsboro;
-    ;
+    border-color: #3f51b5;
 }
 
 #fp {
@@ -25,6 +24,6 @@
     width: 30%;
     position: fixed;
     top: 30%;
-    right: 0%;
+    right: 2%;
     margin-right: 20px;
 }

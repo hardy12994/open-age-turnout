@@ -9,7 +9,7 @@ import 'rxjs/Rx';
 
 @Injectable()
 
-export class WhateverApiGenric<DataModel> {
+export class WhateverApiGeneric<DataModel> {
 
 
     constructor(private api: string, private http: Http, private token?: string) {
