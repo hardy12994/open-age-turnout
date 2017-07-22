@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router'
 
 @Component({
   selector: 'app-get-started',
@@ -11,7 +12,7 @@ export class GetStartedComponent implements OnInit {
   verification;
   setUsernamePassword;
 
-  constructor() {
+  constructor(private router: Router) {
     this.default();
   }
 
@@ -24,8 +25,14 @@ export class GetStartedComponent implements OnInit {
     this.setUsernamePassword = false;
   }
 
+
+  dashCall() {
+    let link = ['/dashboard'];
+    this.router.navigate(link);
+  }
+
   next() {
-    if (this.getStart){
+    if (this.getStart) {
       this.getStart = false;
       this.verification = true;
       this.setUsernamePassword = false;
@@ -39,8 +46,11 @@ export class GetStartedComponent implements OnInit {
       this.setUsernamePassword = true;
       return;
     }
+    if (this.setUsernamePassword) {
+      this.dashCall()
 
     }
+  }
 }
 
 
