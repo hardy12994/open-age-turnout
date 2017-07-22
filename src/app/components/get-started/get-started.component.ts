@@ -7,9 +7,41 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GetStartedComponent implements OnInit {
 
-  constructor() { }
+  getStart;
+  verification;
+  setUsernamePassword;
+
+  constructor() {
+    this.default();
+  }
 
   ngOnInit() {
   }
 
+  default() {
+    this.getStart = true;
+    this.verification = false;
+    this.setUsernamePassword = false;
+  }
+
+  next() {
+    if (this.getStart){
+      this.getStart = false;
+      this.verification = true;
+      this.setUsernamePassword = false;
+      return;
+    }
+
+
+    if (this.verification) {
+      this.getStart = false;
+      this.verification = false;
+      this.setUsernamePassword = true;
+      return;
+    }
+
+    }
 }
+
+
+

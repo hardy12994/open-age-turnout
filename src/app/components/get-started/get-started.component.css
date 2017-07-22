@@ -9,7 +9,7 @@
 #getStart {
     font-size: 17px;
     text-align: center;
-    margin: 20px;
+    margin: 20px 0px 20px 0px;
     padding: 0px 100px 0px 100px;
     background-color: #3f51b5;
     color: wheat;
@@ -18,8 +18,3 @@
     /*border-color: #00b8e6;*/
     border-color: #3f51b5;
 }
-
-
-/*.getstart {
-    color: 
-}*/

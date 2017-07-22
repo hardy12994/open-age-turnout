@@ -1,6 +1,5 @@
-<md-card class="card">
+<md-card class="card" *ngIf="getStart">
 
-    <!--<md-card-title>Register With Us</md-card-title>-->
     <div id="cardFields">
         <div>
             <md-input-container>
@@ -9,6 +8,42 @@
         </div>
     </div>
     <div class="text-center">
-        <button md-raised-button id="getStart">GET STARTED</button>
+        <button md-raised-button id="getStart" (click)="next()">GET STARTED</button>
     </div>
+</md-card>
+
+<md-card class="card" *ngIf="verification">
+
+    <md-card-subtitle>Please Verify Confermation Code</md-card-subtitle>
+    <div id="confermationCode">
+        <div>
+            <md-input-container>
+                <input mdInput placeholder="Confermation Code">
+            </md-input-container>
+        </div>
+    </div>
+    <div class="text-center">
+        <button md-raised-button id="getStart" (click)="next()">Verify</button>
+    </div>
+</md-card>
+
+<md-card class="card" *ngIf="setUsernamePassword">
+    <md-card-subtitle>Set Your Credentials</md-card-subtitle>
+
+    <div id="cardFields">
+        <div>
+            <md-input-container>
+                <input mdInput placeholder="Username">
+            </md-input-container>
+        </div>
+        <div>
+            <md-input-container>
+                <input mdInput placeholder="Passcode">
+            </md-input-container>
+        </div>
+    </div>
+    <div class="text-center">
+        <button md-raised-button id="getStart" (click)="next()">GET YOLO</button>
+    </div>
+    <!--<a href="#">Forgot Passcode ?</a>-->
 </md-card>
