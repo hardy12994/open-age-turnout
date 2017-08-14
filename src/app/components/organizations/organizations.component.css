@@ -1,22 +1,19 @@
-/*.mat-tab-label[_ngcontent-c2] {
-    font-weight: bold;
-}*/
-
-.spacer {
-    -webkit-box-flex: 1;
-    -ms-flex: 1 1 auto;
-    flex: 1 1 auto;
+.orgCard {
+    width: 400px;
 }
 
-.toolbuttons {
-    color: gray;
-    padding-bottom: 5px;
-    padding-top: 5px;
+.sidenav {
+    background-color: #333333;
+    height: 100vh;
 }
 
-.activeTab {
-    border-bottom: 3px solid #f7335e;
-    /*background-color: #444c6f !important;*/
+.addNewOrg {
+    font-size: 17px;
+    text-align: center;
+    margin: 20px 0px 20px 0px;
+    padding: 0px 50px 0px 50px;
+    background-color: #f7335e;
+    color: wheat;
 }
 
 .col-lg-1,

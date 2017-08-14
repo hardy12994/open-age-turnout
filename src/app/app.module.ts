@@ -6,6 +6,7 @@ import { MaterialModule } from "@angular/material";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 import { AppRoutingModule, routingComponents} from './routings/router';
+import { SidebarModule } from 'ng-sidebar';
 
 //Components
 import { AppComponent } from './components/app/app.component';
@@ -15,7 +16,11 @@ import { NotFound404Component } from './components/not-found404/not-found404.com
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 // import { GetStartedComponent } from './components/get-started/get-started.component';
 import { HomeComponent } from './components/home/home.component';
-import { SideNavComponent } from './components/side-nav/side-nav.component';
+import { OrganizationsComponent } from './components/organizations/organizations.component';
+import { DashboardSideNavComponent } from './components/dashboard-side-nav/dashboard-side-nav.component';
+import { HistoryComponent } from './components/history/history.component';
+import { OrgNewComponent } from './components/org-new/org-new.component';
+import { OrgListComponent } from './components/org-list/org-list.component';
 
 
 
@@ -23,18 +28,23 @@ import { SideNavComponent } from './components/side-nav/side-nav.component';
   imports: [
     AppRoutingModule,
     BrowserModule,
+    SidebarModule.forRoot(),
     FormsModule,
     HttpModule,
     MaterialModule,
     BrowserAnimationsModule
-  ], 
+  ],
   declarations: [
     routingComponents,    
     AppComponent,
     NotFound404Component,
     SignUpComponent,
     HomeComponent,
-    SideNavComponent
+    OrganizationsComponent,
+    DashboardSideNavComponent,
+    HistoryComponent,
+    OrgNewComponent,
+    OrgListComponent,
   ],
 
   providers: [],
@@ -45,5 +55,4 @@ export class AppModule {
 constructor(){
   console.log(routingComponents);
 }
-
 }

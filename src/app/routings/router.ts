@@ -8,6 +8,10 @@ import { NotFound404Component } from '../components/not-found404/not-found404.co
 import { SignUpComponent } from '../components/sign-up/sign-up.component';
 import { GetStartedComponent } from '../components/get-started/get-started.component';
 import { HomeComponent } from '../components/home/home.component';
+import { OrganizationsComponent } from '../components/organizations/organizations.component';
+import { HistoryComponent } from '../components/history/history.component';
+import { OrgNewComponent } from '../components/org-new/org-new.component';
+import { OrgListComponent } from '../components/org-list/org-list.component';
 
 
 const appRoutes: Routes = [
@@ -18,13 +22,20 @@ const appRoutes: Routes = [
             { path: 'get-started', component: GetStartedComponent },
             { path: 'login', component: LoginComponent },
             { path: '', pathMatch: 'full', redirectTo: 'get-started' }
-
         ]
     },
-    // { path: 'get-started', component: GetStartedComponent },
     { path: '', pathMatch: 'full', redirectTo: 'home' },
-    // { path: 'login', component: LoginComponent },
-    { path: 'dashboard', component: DashboardComponent },
+    {
+        path: 'dashboard', component: DashboardComponent, children: [
+            { path: 'orgnizations', component: OrganizationsComponent ,children: [
+                { path: 'list', component: OrgListComponent },                
+                { path: 'new', component: OrgNewComponent },
+                { path: '', pathMatch: 'full', redirectTo: 'list' },
+           ]},
+            { path: 'history', component: HistoryComponent },
+            { path: '', pathMatch: 'full', redirectTo: 'orgnizations' },
+        ]
+    }
     // { path: '**', component: NotFound404Component }
 ];
 

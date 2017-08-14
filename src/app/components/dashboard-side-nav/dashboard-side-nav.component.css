@@ -1,0 +1,31 @@
+.logo {
+    text-align: center;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: #f7335e;
+    font-size: 30px;
+}
+
+
+/*.mdlist {
+    padding: 0% 0% 0% 30%;
+}*/
+
+.mat-list-item h5 {
+    margin: 0 auto;
+}
+
+h5 {
+    color: wheat;
+    /*padding: 10% 0% 10% 10%;*/
+    text-align: center;
+}
+
+.activeSideNav {
+    border-left: 18px solid wheat;
+    background-color: #262626 !important;
+}
+
+
+/*.mat-list-item-content {
+    text-align: center;
+}*/

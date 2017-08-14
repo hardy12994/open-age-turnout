@@ -7,6 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
+
+
+loggedIn:string="Hardy";
+   _opened: boolean = true;
+
+   _toggleSidebar() {
+    this._opened = !this._opened;
+  }
+
   constructor() {
     console.log('dashboard wooorrrrrrrrrrrrrrrks');
    }

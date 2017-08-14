@@ -1,12 +1,25 @@
-<md-sidenav-container class="example-container">
-    <md-sidenav #sidenav class="example-sidenav">
-        Jolly good!
-    </md-sidenav>
+<div class="row">
 
-    <div class="example-sidenav-content">
-        <button type="button" md-button (click)="sidenav.open()">
-      Open sidenav
-    </button>
+    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+        <!--<app-dashboard-side-nav></app-dashboard-side-nav>-->
     </div>
 
-</md-sidenav-container>
+    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+        <md-toolbar style="box-shadow: 3px 3px 0.5px #cccccc;">
+
+            <button class="toolbuttons" md-button routerLink='/dashboard/orgnizations' routerLinkActive="activeTab">
+            <b>ORGANIZATIONS</b></button>
+
+            <button md-button routerLink='/dashboard/history' routerLinkActive="activeTab" class="toolbuttons">
+            <b>HISTORY</b></button>
+
+            <span class="spacer"></span>
+
+            <button md-button class="toolbuttons">Logout</button>
+        </md-toolbar>
+    </div>
+
+</div>
+<div class="row">
+    <router-outlet></router-outlet>
+</div>
