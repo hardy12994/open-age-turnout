@@ -1,11 +1,27 @@
 <md-card class="card" *ngIf="getStart">
-
+    <!--<md-card-subtitle>Sign Up</md-card-subtitle>-->
     <div id="cardFields">
-        <div>
+        <div *ngIf="signUpwith==='phone'">
             <md-input-container>
-                <input mdInput placeholder="Phone">
+                <input mdInput placeholder="Phone" [(ngModel)]="client.phone">
             </md-input-container>
         </div>
+        <div *ngIf="signUpwith==='email'">
+            <md-input-container>
+                <input mdInput placeholder="Email" [(ngModel)]="client.email">
+            </md-input-container>
+        </div>
+
+
+    </div>
+
+    <!-- Choose email or phone-->
+
+    <div>
+        <md-radio-group [(ngModel)]="signUpwith">
+            <md-radio-button value="email" class="spacer">Email</md-radio-button>
+            <md-radio-button value="phone">Phone</md-radio-button>
+        </md-radio-group>
     </div>
     <div class="text-center">
         <button md-raised-button id="getStart" (click)="next()">GET STARTED</button>
@@ -18,7 +34,7 @@
     <div id="confermationCode">
         <div>
             <md-input-container>
-                <input mdInput placeholder="Confermation Code">
+                <input mdInput placeholder="Confermation Code" [(ngModel)]="client.pin">
             </md-input-container>
         </div>
     </div>
@@ -47,3 +63,4 @@
     </div>
     <!--<a href="#">Forgot Passcode ?</a>-->
 </md-card>
+<md-spinner *ngIf="this.appSettings.isLoading" mode="indeterminate"></md-spinner>
