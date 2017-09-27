@@ -1,19 +1,32 @@
-import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { Injectable, OnInit, Component } from '@angular/core';
+import { Http, Headers, ConnectionBackend, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-import 'rxjs/Rx';
+import 'rxjs/add/operator/toPromise';
 
-
+import { Data, Page, Success, Failure } from "app/models/responses.model";
 import { ApiInterface } from '../helpers/api.helper';
-
+import { AppSettingsService } from "../services/app-settings.service";
 
 @Injectable()
+export class ApiGeneric<DataModel> implements ApiInterface<DataModel>{
 
-export class ApiGeneric<DataModel> implements ApiInterface<DataModel> {
+    isSuccess: boolean;
+    data: DataModel;
+    items: DataModel[];
+    message: string;
+    error: any;
 
+    constructor(private apiName: string,
+        private appSettingsService,
+        private http,
+        private token?: string) {
+    }
 
-    constructor(private apiName: string, private http: Http, private token?: string) {
-        console.log(this.http);
+    startLoading() {
+        this.appSettingsService.setLoading(true);
+    }
+    stopLoading() {
+        this.appSettingsService.setLoading(false);
     }
 
     getHeaders(): Headers {
@@ -27,61 +40,15 @@ export class ApiGeneric<DataModel> implements ApiInterface<DataModel> {
     }
 
 
-    get(id: string): Promise<DataModel> {
+    get(id: string): Promise<Data<DataModel>> {
+
+        this.startLoading()
+
         return this.http.get(`/api/${this.apiName}/${id}`)
             .toPromise()
             .then(response => {
-                const res = response.json();
-                if (response.status !== 200) {
-                    throw res;
-                }
+                this.stopLoading();
 
-                if (!res.isSuccess) {
-                    throw res.message;
-                }
-
-                if (res.isSuccess) {
-                    return res;
-                }
-
-            })
-            .catch(err => {
-                return {
-                    isSuccess: false,
-                    err: err
-                }
-            });
-    }
-
-    put(id: string, model: DataModel): Promise<DataModel> {
-        return this.http.put(`/api/${this.apiName}/${id}`, model)
-            .toPromise()
-            .then(response => {
-                const res = response.json();
-                if (response.status !== 200) {
-                    throw res;
-                }
-
-                if (!res.isSuccess) {
-                    throw res.message;
-                }
-
-                if (res.isSuccess) {
-                    return res;
-                }
-            })
-            .catch(err => {
-                return {
-                    isSuccess: false,
-                    err: err
-                }
-            });
-    }
-
-    post(model: DataModel): Promise<DataModel> {
-        return this.http.post(`/api/${this.apiName}`, model)
-            .toPromise()
-            .then(response => {
                 const res = response.json();
                 if (response.status !== 200) {
                     throw res;
@@ -94,8 +61,11 @@ export class ApiGeneric<DataModel> implements ApiInterface<DataModel> {
                 if (res.isSuccess) {
                     return res;
                 }
+
             })
             .catch(err => {
+                this.stopLoading();
+
                 return {
                     isSuccess: false,
                     err: err
@@ -103,7 +73,77 @@ export class ApiGeneric<DataModel> implements ApiInterface<DataModel> {
             });
     }
 
-    delete(id: string) {
+    put(id: string, model: DataModel): Promise<Data<DataModel>> {
+
+        this.startLoading()
+
+        return this.http.put(`/api/${this.apiName}/${id}`, model)
+            .toPromise()
+            .then(response => {
+                this.stopLoading();
+
+                const res = response.json();
+                if (response.status !== 200) {
+                    throw res;
+                }
+
+                if (!res.isSuccess) {
+                    throw res.message;
+                }
+
+                if (res.isSuccess) {
+                    return res;
+                }
+            })
+            .catch(err => {
+                this.stopLoading();
+
+                return {
+                    isSuccess: false,
+                    err: err
+                }
+            });
+    }
+
+    post(model: DataModel): Promise<Data<DataModel> | Failure> {
+
+        this.startLoading()
+
+        return this.http.post(`/api/${this.apiName}`, model)
+            .toPromise()
+            .then(response => {
+                this.stopLoading();
+
+                const res = response.json();
+                if (response.status !== 200) {
+                    throw res;
+                }
+
+                if (!res.isSuccess) {
+                    throw res;
+                } else {
+
+                    return res;
+                }
+            })
+            .catch(err => {
+                this.stopLoading();
+
+                if (err._body) {
+                    return JSON.parse(err._body);
+                }
+
+                return {
+                    isSuccess: false,
+                    err: err
+                }
+            });
+    }
+
+    delete(id: string): Promise<any> {
+
+        this.startLoading();
+
         return this.http.delete(`/api/${this.apiName}`)
             .toPromise()
             .then(response => {
@@ -121,6 +161,8 @@ export class ApiGeneric<DataModel> implements ApiInterface<DataModel> {
                 }
             })
             .catch(err => {
+                this.stopLoading();
+
                 return {
                     isSuccess: false,
                     err: err
@@ -128,11 +170,15 @@ export class ApiGeneric<DataModel> implements ApiInterface<DataModel> {
             });
 
     }
-    
-    search(): Promise<any> {
+
+    search(query: object): Promise<Page<DataModel>> {
+
+        this.startLoading();
+
         return this.http.get(`/api/${this.apiName}`)
             .toPromise()
             .then(response => {
+                this.stopLoading();
                 const res = response.json();
                 if (response.status !== 200) {
                     throw res;
@@ -147,6 +193,7 @@ export class ApiGeneric<DataModel> implements ApiInterface<DataModel> {
                 }
             })
             .catch(err => {
+                this.stopLoading();
                 return {
                     isSuccess: false,
                     err: err
