@@ -2,9 +2,9 @@ export class Employee {
   id: number;
   status: string;
   name: string;
-  code: string;
-  email: string;
+  username:string;
   token: string;
   password: string;
-  phone?: string;
+  phone: string;
+  admin:boolean;
 }
