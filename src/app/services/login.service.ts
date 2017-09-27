@@ -4,15 +4,15 @@ import { Employee } from '../models/employee.model';
 import { ApiGeneric } from '../generics/api.generic';
 import { WhateverApiGeneric } from '../generics/whateverApi.generic';
 import { Http, Headers } from '@angular/http';
+import { AppSettingsService } from "app/services";
 
 
 @Injectable()
-export class LoginService{
+export class LoginService {
     employeeApis
     employee: ApiInterface<Employee>;
-    
-    constructor(http: Http){
-        this.employee = new ApiGeneric<Employee>('employees', http);
-        // this.employeeApis = new WhateverApiGeneric<Employee>('/ems/api/employees/signIn',http);
+    constructor(http:Http, appSettingsService: AppSettingsService) {
+        this.employee = new ApiGeneric<Employee>('employees', appSettingsService, http);
+        this.employeeApis = new WhateverApiGeneric<Employee>('/ems/api/employees/signIn', http);
     }
 }
