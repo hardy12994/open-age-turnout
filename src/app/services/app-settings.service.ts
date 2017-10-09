@@ -6,7 +6,6 @@ export class AppSettingsService {
   isLoading: boolean;
 
   constructor() {
-    console.log('app setting service is called');
     this.isLoading = false;
   }
 

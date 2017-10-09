@@ -14,6 +14,11 @@ import {
   AppSettingsService
 } from './services';
 
+//guards
+import {
+  AuthGuard,
+  UserGuard
+} from './guards';
 
 //Components
 import { AppComponent } from './components/app/app.component';
@@ -30,6 +35,7 @@ import { MyHiddenDirective } from './directives/my-hidden.directive';
 import { MyUnderlineDirective } from './directives/my-underline.directive';
 import { MyIfDirective } from './directives/my-if.directive';
 import { RoleSpecifireDirective } from './directives/role-specifire.directive';
+import { ToasterService } from "app/services/toaster.service";
 
 
 
@@ -61,6 +67,8 @@ import { RoleSpecifireDirective } from './directives/role-specifire.directive';
     RoleSpecifireDirective
   ],
   providers: [
+    AuthGuard,UserGuard,
+    ToasterService,
     AppSettingsService
   ],
   bootstrap: [AppComponent]

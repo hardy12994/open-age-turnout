@@ -1,14 +1,15 @@
 import { Component, OnInit, Input, Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router'
-import { Client } from '../../models/client.model';
+import { Client, Employee } from '../../models';
 import { ClientService } from "app/services";
-import { AppSettingsService } from 'app/services'
+import { AppSettingsService, LoginService } from 'app/services'
+import { ToasterService } from "app/services/toaster.service";
 
 @Component({
   selector: 'app-get-started',
   templateUrl: './get-started.component.html',
   styleUrls: ['./get-started.component.css'],
-  providers: [ClientService]
+  providers: [ClientService, LoginService]
 })
 
 export class GetStartedComponent implements OnInit {
@@ -17,21 +18,20 @@ export class GetStartedComponent implements OnInit {
   verification;
   setUsernamePassword;
   signUpwith;
-  client: Client = new Client();
-  val=false;
-  condition = true;
-  isLoading=false;
-  err:any;
 
-  constructor(private clientService: ClientService,private router: Router,
-   public appSettings: AppSettingsService) {
+  private client: Client = new Client();
+  private employee: Employee = new Employee();
+
+  constructor(
+    private clientService: ClientService,
+    private loginService: LoginService,
+    private router: Router,
+    public appSettings: AppSettingsService,
+    public toasterService: ToasterService) {
     this.default();
   }
 
-  ngOnInit() {
-    // this.appSettings=new AppSettingsService();
-    console.log(this.appSettings.isLoading);
-   }
+  ngOnInit() { }
 
   default() {
     this.signUpwith = "phone";
@@ -46,52 +46,63 @@ export class GetStartedComponent implements OnInit {
     this.router.navigate(link);
   }
 
-  next() {
-    if (this.getStart) {
-      
-      return this.clientService.client.post(this.client)
-        .then(data => {
-          console.log(this.appSettings);
+  register() {
 
-          if (!data.isSuccess) {
-            throw data.error
-          }
-          this.client=data.data;
-          this.getStart = false;
-          this.verification = true;      
-        })
-        .catch(err => {
-          console.log(err);
-          this.err = err;          
-          // my Dacorative should be call with toaster.
-        })
-    }
+    return this.clientService.client.post(this.client)
+      .then(data => {
+
+        if (!data.isSuccess) {
+          throw data.error
+        }
+        this.client = data.data;
+        this.getStart = false;
+        this.verification = true;
+        this.toasterService.set('Please Confirm your OTP', 'i');
+      })
+      .catch(err => this.toasterService.set(err, 'f'))
+  }
 
 
-    if (this.verification) {
-
-      return this.clientService.clientVerification.post(this.client)
-      .then(data=>{
-
+  verify() {
+    return this.clientService.clientVerification.post(this.client)
+      .then(data => {
         if (!data.isSuccess) {
           throw data.error || data.message
         }
-
-
         this.verification = false;
         this.setUsernamePassword = true;
+        this.toasterService.set('Please Set your Username and Passcode', 'i');
       })
-      .catch(err=>{
-        console.log(err);
-          // my Dacorative should be call with toaster.
-        this.err = err;
+      .catch(err => this.toasterService.set(err, 'f'))
+  }
+
+  createEmployee() {
+    this.employee.client = this.client;
+    return this.loginService.employeeSignUp.post(this.employee)
+      .then(data => {
+        if (!data.isSuccess) {
+          throw data["error"] || data["message"]
+        }
+        this.employee = data["data"];
+        window.localStorage.setItem("token", this.employee.token);
+       return this.dashCall();
       })
+      .catch(err => this.toasterService.set(err, 'f'))
+  }
+
+
+
+  next() {
+    if (this.getStart) {
+      return this.register();
     }
 
+    if (this.verification) {
+      return this.verify();
+    }
 
     if (this.setUsernamePassword) {
-      this.dashCall()
-
+      return this.createEmployee();
     }
 
   }

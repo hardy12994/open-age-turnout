@@ -13,29 +13,38 @@ import { HistoryComponent } from '../components/history/history.component';
 import { OrgNewComponent } from '../components/org-new/org-new.component';
 import { OrgListComponent } from '../components/org-list/org-list.component';
 
+//guards
+import {
+    AuthGuard,
+    UserGuard
+} from '../guards';
+
+
+
+const OrgChilds: Routes = [
+    { path: 'list', component: OrgListComponent },
+    { path: 'new', component: OrgNewComponent },
+    { path: '', pathMatch: 'full', redirectTo: 'list' }
+]
+
+const dashChilds: Routes = [
+    { path: 'orgnizations', component: OrganizationsComponent, children: OrgChilds },
+    { path: 'history', component: HistoryComponent },
+    { path: '', pathMatch: 'full', redirectTo: 'orgnizations' }
+]
+
+
+const homeChilds: Routes = [
+    { path: 'get-started', component: GetStartedComponent },
+    { path: 'login', component: LoginComponent },
+    { path: '', pathMatch: 'full', redirectTo: 'get-started' }
+]
+
 
 const appRoutes: Routes = [
-
-
-    {
-        path: 'home', component: HomeComponent, children: [
-            { path: 'get-started', component: GetStartedComponent },
-            { path: 'login', component: LoginComponent },
-            { path: '', pathMatch: 'full', redirectTo: 'get-started' }
-        ]
-    },
-    { path: '', pathMatch: 'full', redirectTo: 'home' },
-    {
-        path: 'dashboard', component: DashboardComponent, children: [
-            { path: 'orgnizations', component: OrganizationsComponent ,children: [
-                { path: 'list', component: OrgListComponent },                
-                { path: 'new', component: OrgNewComponent },
-                { path: '', pathMatch: 'full', redirectTo: 'list' },
-           ]},
-            { path: 'history', component: HistoryComponent },
-            { path: '', pathMatch: 'full', redirectTo: 'orgnizations' },
-        ]
-    }
+    { path: 'home', component: HomeComponent, children: homeChilds },
+    { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard], children: dashChilds },
+    { path: '', pathMatch: 'full', redirectTo: 'home' }
     // { path: '**', component: NotFound404Component }
 ];
 
@@ -47,6 +56,7 @@ const appRoutes: Routes = [
         RouterModule
     ]
 })
+
 export class AppRoutingModule { }
 
 export const routingComponents = [LoginComponent, DashboardComponent, GetStartedComponent];

@@ -9,10 +9,12 @@ import { AppSettingsService } from "app/services";
 
 @Injectable()
 export class LoginService {
-    employeeApis
+    employeeSignUp: ApiInterface<Employee>;
     employee: ApiInterface<Employee>;
-    constructor(http:Http, appSettingsService: AppSettingsService) {
+
+    constructor(http: Http, appSettingsService: AppSettingsService) {
         this.employee = new ApiGeneric<Employee>('employees', appSettingsService, http);
-        this.employeeApis = new WhateverApiGeneric<Employee>('/ems/api/employees/signIn', http);
+        this.employeeSignUp = new WhateverApiGeneric<Employee>('api/employees/signUp', appSettingsService, http);
     }
+
 }

@@ -2,9 +2,7 @@ import { Observable } from 'rxjs/Rx';
 // import { ResponseHelper } from './response.helper';
 import { Data ,Page,Success,Failure} from "app/models/responses.model";
 
-export interface ApiInterface<DataModel>
-    extends Data<DataModel>, Page<DataModel>, Success, Failure
- {
+export interface ApiInterface<DataModel> extends Data<DataModel>, Page<DataModel>, Failure, Success{
     
     get(id: string): Promise<Data<DataModel>>,
 

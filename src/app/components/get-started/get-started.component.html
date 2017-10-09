@@ -1,21 +1,24 @@
+<p *toast="toasterService.type" id="toast">
+    {{toasterService.message}}</p>
+
 <md-card class="card" *ngIf="getStart">
     <!--<md-card-subtitle>Sign Up</md-card-subtitle>-->
     <div id="cardFields">
         <div *ngIf="signUpwith==='phone'">
             <md-input-container>
-                <input mdInput placeholder="Phone" [(ngModel)]="client.phone">
+                <input mdInput placeholder="Phone" [(ngModel)]="client.phone" [style.color]="'black'">
             </md-input-container>
         </div>
         <div *ngIf="signUpwith==='email'">
             <md-input-container>
                 <input mdInput placeholder="Email" [(ngModel)]="client.email">
             </md-input-container>
+
         </div>
 
-
     </div>
-
     <!-- Choose email or phone-->
+
 
     <div>
         <md-radio-group [(ngModel)]="signUpwith">
@@ -49,12 +52,12 @@
     <div id="cardFields">
         <div>
             <md-input-container>
-                <input mdInput placeholder="Username">
+                <input mdInput placeholder="Username" [(ngModel)]="employee.username">
             </md-input-container>
         </div>
         <div>
             <md-input-container>
-                <input mdInput placeholder="Passcode">
+                <input mdInput placeholder="Passcode" type="password" [(ngModel)]="employee.password">
             </md-input-container>
         </div>
     </div>

@@ -22,6 +22,20 @@ export class ApiGeneric<DataModel> implements ApiInterface<DataModel>{
         private token?: string) {
     }
 
+
+    private getHeaders(): Headers {
+
+        const headers: Headers = new Headers();
+        let empToken = window.localStorage.getItem('token');
+
+        headers.append('Content-Type', 'application/json');
+
+        if (empToken) {
+            headers.append('x-access-token', empToken);
+        }
+        return headers;
+    }
+
     startLoading() {
         this.appSettingsService.setLoading(true);
     }
@@ -29,22 +43,12 @@ export class ApiGeneric<DataModel> implements ApiInterface<DataModel>{
         this.appSettingsService.setLoading(false);
     }
 
-    getHeaders(): Headers {
-        const headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        if (this.token) {
-            headers.append('x-access-token', this.token + '');
-            headers.append('org-code', 'msas');
-        }
-        return headers;
-    }
-
 
     get(id: string): Promise<Data<DataModel>> {
 
         this.startLoading()
 
-        return this.http.get(`/api/${this.apiName}/${id}`)
+        return this.http.get(`/api/${this.apiName}/${id}`, { headers: this.getHeaders() })
             .toPromise()
             .then(response => {
                 this.stopLoading();
@@ -68,7 +72,7 @@ export class ApiGeneric<DataModel> implements ApiInterface<DataModel>{
 
                 return {
                     isSuccess: false,
-                    err: err
+                    error: err
                 }
             });
     }
@@ -77,7 +81,7 @@ export class ApiGeneric<DataModel> implements ApiInterface<DataModel>{
 
         this.startLoading()
 
-        return this.http.put(`/api/${this.apiName}/${id}`, model)
+        return this.http.put(`/api/${this.apiName}/${id}`, model,  { headers: this.getHeaders() })
             .toPromise()
             .then(response => {
                 this.stopLoading();
@@ -100,7 +104,7 @@ export class ApiGeneric<DataModel> implements ApiInterface<DataModel>{
 
                 return {
                     isSuccess: false,
-                    err: err
+                    error: err.error
                 }
             });
     }
@@ -109,7 +113,7 @@ export class ApiGeneric<DataModel> implements ApiInterface<DataModel>{
 
         this.startLoading()
 
-        return this.http.post(`/api/${this.apiName}`, model)
+        return this.http.post(`/api/${this.apiName}`, model, { headers: this.getHeaders() })
             .toPromise()
             .then(response => {
                 this.stopLoading();
@@ -122,7 +126,6 @@ export class ApiGeneric<DataModel> implements ApiInterface<DataModel>{
                 if (!res.isSuccess) {
                     throw res;
                 } else {
-
                     return res;
                 }
             })
@@ -135,7 +138,7 @@ export class ApiGeneric<DataModel> implements ApiInterface<DataModel>{
 
                 return {
                     isSuccess: false,
-                    err: err
+                    error: err.error
                 }
             });
     }
@@ -144,7 +147,7 @@ export class ApiGeneric<DataModel> implements ApiInterface<DataModel>{
 
         this.startLoading();
 
-        return this.http.delete(`/api/${this.apiName}`)
+        return this.http.delete(`/api/${this.apiName}`, { headers: this.getHeaders() })
             .toPromise()
             .then(response => {
                 const res = response.json();
@@ -165,7 +168,7 @@ export class ApiGeneric<DataModel> implements ApiInterface<DataModel>{
 
                 return {
                     isSuccess: false,
-                    err: err
+                    error: err
                 }
             });
 
@@ -175,7 +178,7 @@ export class ApiGeneric<DataModel> implements ApiInterface<DataModel>{
 
         this.startLoading();
 
-        return this.http.get(`/api/${this.apiName}`)
+        return this.http.get(`/api/${this.apiName}`, { headers: this.getHeaders() })
             .toPromise()
             .then(response => {
                 this.stopLoading();
@@ -196,7 +199,7 @@ export class ApiGeneric<DataModel> implements ApiInterface<DataModel>{
                 this.stopLoading();
                 return {
                     isSuccess: false,
-                    err: err
+                    error: err
                 }
             });
     }

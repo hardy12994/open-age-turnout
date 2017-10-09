@@ -5,6 +5,12 @@
 .sidenav {
     background-color: #333333;
     height: 100vh;
+    position: fixed;
+    z-index: 1;
+}
+
+.myOrgs {
+    margin-left: 250px;
 }
 
 .addNewOrg {

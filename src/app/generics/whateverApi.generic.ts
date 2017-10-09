@@ -2,86 +2,56 @@ import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/Rx';
-
-
-// import { ApiInterface } from '../helpers/api.helper';
+import { ApiInterface } from "app/helpers/api.helper";
+import { Data, Failure, Page } from "app/models/responses.model";
 
 
 @Injectable()
 
-export class WhateverApiGeneric<DataModel> {
+export class WhateverApiGeneric<DataModel> implements ApiInterface<DataModel>{
+    
+    isSuccess: boolean;
+    data: DataModel;
+    items: DataModel[];
+    error: string;
+    message: string;
+
+    constructor(private apiName: string,
+        private appSettingsService,
+        private http,
+        private token?: string) { }
 
 
-    constructor(private api: string, private http: Http, private token?: string) {
+    private getHeaders(): Headers {
 
-    }
+        const headers: Headers = new Headers();
+        let empToken = window.localStorage.getItem('token');
 
-    getHeaders(): Headers {
-        const headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        if (this.token) {
-            headers.append('x-access-token', this.token + '');
-            headers.append('org-code', 'msas');
+
+        if (empToken) {
+            headers.append('x-access-token', empToken);
         }
         return headers;
     }
 
+    startLoading() {
+        this.appSettingsService.setLoading(true);
+    }
+    stopLoading() {
+        this.appSettingsService.setLoading(false);
+    }
 
-    // get(id: string): Promise<DataModel> {
-    //     return this.http.get(`/api/${this.apiName}/${id}`)
-    //         .toPromise()
-    //         .then(response => {
-    //             const res = response.json();
-    //             if (response.status !== 200) {
-    //                 throw res;
-    //             }
 
-    //             if (!res.isSuccess) {
-    //                 throw res.message;
-    //             }
+    get(id: string): Promise<Data<DataModel>> {
 
-    //             if (res.isSuccess) {
-    //                 return res;
-    //             }
+        this.startLoading()
 
-    //         })
-    //         .catch(err => {
-    //             return {
-    //                 isSuccess: false,
-    //                 err: err
-    //             }
-    //         });
-    // }
-
-    // put(id: string, model: DataModel): Promise<DataModel> {
-    //     return this.http.put(`/api/${this.apiName}/${id}`, model)
-    //         .toPromise()
-    //         .then(response => {
-    //             const res = response.json();
-    //             if (response.status !== 200) {
-    //                 throw res;
-    //             }
-
-    //             if (!res.isSuccess) {
-    //                 throw res.message;
-    //             }
-
-    //             if (res.isSuccess) {
-    //                 return res;
-    //             }
-    //         })
-    //         .catch(err => {
-    //             return {
-    //                 isSuccess: false,
-    //                 err: err
-    //             }
-    //         });
-    // }
-
-    post(model: DataModel): Promise<DataModel> {
-        return this.http.post(`${this.api}`, model)
+        return this.http.get(`${this.apiName}`, { headers: this.getHeaders() })
             .toPromise()
             .then(response => {
+                this.stopLoading();
+
                 const res = response.json();
                 if (response.status !== 200) {
                     throw res;
@@ -94,64 +64,142 @@ export class WhateverApiGeneric<DataModel> {
                 if (res.isSuccess) {
                     return res;
                 }
+
             })
             .catch(err => {
+                this.stopLoading();
+
                 return {
                     isSuccess: false,
-                    err: err
+                    error: err
                 }
             });
     }
 
-    // delete(id: string) {
-    //     return this.http.delete(`/api/${this.apiName}`)
-    //         .toPromise()
-    //         .then(response => {
-    //             const res = response.json();
-    //             if (response.status !== 200) {
-    //                 throw res;
-    //             }
+    put(id: string, model: DataModel): Promise<Data<DataModel>> {
 
-    //             if (!res.isSuccess) {
-    //                 throw res.message;
-    //             }
+        this.startLoading()
 
-    //             if (res.isSuccess) {
-    //                 return res;
-    //             }
-    //         })
-    //         .catch(err => {
-    //             return {
-    //                 isSuccess: false,
-    //                 err: err
-    //             }
-    //         });
+        return this.http.put(`${this.apiName}`, model, { headers: this.getHeaders() })
+            .toPromise()
+            .then(response => {
+                this.stopLoading();
 
-    // }
+                const res = response.json();
+                if (response.status !== 200) {
+                    throw res;
+                }
 
-    // search(): Promise<any> {
-    //     return this.http.get(`/api/${this.apiName}`)
-    //         .toPromise()
-    //         .then(response => {
-    //             const res = response.json();
-    //             if (response.status !== 200) {
-    //                 throw res;
-    //             }
+                if (!res.isSuccess) {
+                    throw res.message;
+                }
 
-    //             if (!res.isSuccess) {
-    //                 throw res.message;
-    //             }
+                if (res.isSuccess) {
+                    return res;
+                }
+            })
+            .catch(err => {
+                this.stopLoading();
 
-    //             if (res.isSuccess) {
-    //                 return res;
-    //             }
-    //         })
-    //         .catch(err => {
-    //             return {
-    //                 isSuccess: false,
-    //                 err: err
-    //             }
-    //         });
-    // }
+                return {
+                    isSuccess: false,
+                    error: err.error
+                }
+            });
+    }
 
+    post(model: DataModel): Promise<Data<DataModel> | Failure> {
+
+        this.startLoading()
+
+        return this.http.post(`${this.apiName}`, model, { headers: this.getHeaders() })
+            .toPromise()
+            .then(response => {
+                this.stopLoading();
+
+                const res = response.json();
+                if (response.status !== 200) {
+                    throw res;
+                }
+
+                if (!res.isSuccess) {
+                    throw res;
+                } else {
+                    return res;
+                }
+            })
+            .catch(err => {
+                this.stopLoading();
+
+                if (err._body) {
+                    return JSON.parse(err._body);
+                }
+
+                return {
+                    isSuccess: false,
+                    error: err.error
+                }
+            });
+    }
+
+    delete(id: string): Promise<any> {
+
+        this.startLoading();
+
+        return this.http.delete(`${this.apiName}`, { headers: this.getHeaders() })
+            .toPromise()
+            .then(response => {
+                const res = response.json();
+                if (response.status !== 200) {
+                    throw res;
+                }
+
+                if (!res.isSuccess) {
+                    throw res.message;
+                }
+
+                if (res.isSuccess) {
+                    return res;
+                }
+            })
+            .catch(err => {
+                this.stopLoading();
+
+                return {
+                    isSuccess: false,
+                    error: err
+                }
+            });
+
+    }
+
+    search(query: object): Promise<Page<DataModel>> {
+
+        this.startLoading();
+
+        return this.http.get(`${this.apiName}`, { headers: this.getHeaders() })
+            .toPromise()
+            .then(response => {
+                this.stopLoading();
+                const res = response.json();
+                if (response.status !== 200) {
+                    throw res;
+                }
+
+                if (!res.isSuccess) {
+                    throw res.message;
+                }
+
+                if (res.isSuccess) {
+                    return res;
+                }
+            })
+            .catch(err => {
+                this.stopLoading();
+                return {
+                    isSuccess: false,
+                    error: err
+                }
+            });
+    }
 }
