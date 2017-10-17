@@ -4,6 +4,7 @@ import { Client, Employee } from '../../models';
 import { ClientService } from "app/services";
 import { AppSettingsService, LoginService } from 'app/services'
 import { ToasterService } from "app/services/toaster.service";
+import { OnChanges, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-get-started',
@@ -21,7 +22,7 @@ export class GetStartedComponent implements OnInit {
 
   private client: Client = new Client();
   private employee: Employee = new Employee();
-
+  
   constructor(
     private clientService: ClientService,
     private loginService: LoginService,
@@ -31,7 +32,8 @@ export class GetStartedComponent implements OnInit {
     this.default();
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+  }
 
   default() {
     this.signUpwith = "phone";
@@ -47,7 +49,6 @@ export class GetStartedComponent implements OnInit {
   }
 
   register() {
-
     return this.clientService.client.post(this.client)
       .then(data => {
 
@@ -64,7 +65,7 @@ export class GetStartedComponent implements OnInit {
 
 
   verify() {
-    return this.clientService.clientVerification.post(this.client)
+    return this.clientService.clientVerification.post({ client: this.client, pin: this.client.pin })
       .then(data => {
         if (!data.isSuccess) {
           throw data.error || data.message
@@ -85,7 +86,7 @@ export class GetStartedComponent implements OnInit {
         }
         this.employee = data["data"];
         window.localStorage.setItem("token", this.employee.token);
-       return this.dashCall();
+        return this.dashCall();
       })
       .catch(err => this.toasterService.set(err, 'f'))
   }

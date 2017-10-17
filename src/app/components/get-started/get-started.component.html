@@ -1,69 +1,146 @@
 <p *toast="toasterService.type" id="toast">
     {{toasterService.message}}</p>
 
-<md-card class="card" *ngIf="getStart">
-    <!--<md-card-subtitle>Sign Up</md-card-subtitle>-->
-    <div id="cardFields">
-        <div *ngIf="signUpwith==='phone'">
-            <md-input-container>
-                <input mdInput placeholder="Phone" [(ngModel)]="client.phone" [style.color]="'black'">
-            </md-input-container>
-        </div>
-        <div *ngIf="signUpwith==='email'">
-            <md-input-container>
-                <input mdInput placeholder="Email" [(ngModel)]="client.email">
-            </md-input-container>
-
-        </div>
-
-    </div>
-    <!-- Choose email or phone-->
-
-
-    <div>
-        <md-radio-group [(ngModel)]="signUpwith">
-            <md-radio-button value="email" class="spacer">Email</md-radio-button>
-            <md-radio-button value="phone">Phone</md-radio-button>
-        </md-radio-group>
-    </div>
-    <div class="text-center">
-        <button md-raised-button id="getStart" (click)="next()">GET STARTED</button>
-    </div>
-</md-card>
-
-<md-card class="card" *ngIf="verification">
-
-    <md-card-subtitle>Please Verify Confermation Code</md-card-subtitle>
-    <div id="confermationCode">
-        <div>
-            <md-input-container>
-                <input mdInput placeholder="Confermation Code" [(ngModel)]="client.pin">
-            </md-input-container>
-        </div>
-    </div>
-    <div class="text-center">
-        <button md-raised-button id="getStart" (click)="next()">Verify</button>
-    </div>
-</md-card>
-
-<md-card class="card" *ngIf="setUsernamePassword">
-    <md-card-subtitle>Set Your Credentials</md-card-subtitle>
-
-    <div id="cardFields">
-        <div>
-            <md-input-container>
-                <input mdInput placeholder="Username" [(ngModel)]="employee.username">
-            </md-input-container>
-        </div>
-        <div>
-            <md-input-container>
-                <input mdInput placeholder="Passcode" type="password" [(ngModel)]="employee.password">
-            </md-input-container>
-        </div>
-    </div>
-    <div class="text-center">
-        <button md-raised-button id="getStart" (click)="next()">GET YOLO</button>
-    </div>
-    <!--<a href="#">Forgot Passcode ?</a>-->
-</md-card>
 <md-spinner *ngIf="this.appSettings.isLoading" mode="indeterminate"></md-spinner>
+<div>
+
+    <form #getStarted="ngForm" (ngSubmit)="next()">
+
+        <md-card class="card" *ngIf="getStart">
+            <!--<md-card-subtitle>Sign Up</md-card-subtitle>-->
+            <div id="cardFields">
+                <div *ngIf="signUpwith==='phone'">
+                    <md-input-container>
+                        <input type="text" mdInput placeholder="Phone" [style.color]="'black'" required [(ngModel)]="client.phone" name="phone" id="phone" maxlength="10" pattern="[0-9]*" #phone="ngModel">
+                    </md-input-container>
+
+                    <div *ngIf="phone.invalid && phone.dirty">
+
+                        <div *ngIf="phone.errors.required" class="err">
+                            Phone is required.
+                        </div>
+
+                        <div *ngIf="phone.errors.maxlength" class="err">
+                            Please Enter 10 digits Phone Number.
+                        </div>
+
+                        <div *ngIf="phone.errors.pattern" class="err">
+                            Please Enter digits 0-9.
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="signUpwith==='email'">
+                    <md-input-container>
+                        <input mdInput type="email" placeholder="Email" [(ngModel)]="client.email" name="email" id="email" pattern="^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" required #email="ngModel">
+                    </md-input-container>
+
+                    <div *ngIf="email.invalid && email.dirty">
+
+                        <div *ngIf="email.errors.required" class="err">
+                            Email is required.
+                        </div>
+
+                        <div *ngIf="email.errors.pattern" class="err">
+                            Please Enter valid email-Id.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- Choose email or phone-->
+
+
+            <div>
+                <md-radio-group [(ngModel)]="signUpwith" name="signUpBy" id="signUpBy">
+                    <md-radio-button value="email" class="spacer">Email</md-radio-button>
+                    <md-radio-button value="phone">Phone</md-radio-button>
+                </md-radio-group>
+            </div>
+            <div class="text-center">
+                <button type="submit" md-raised-button id="getStart" [disabled]="!getStarted.form.valid">GET STARTED</button>
+            </div>
+        </md-card>
+    </form>
+
+    <form #getStarted1="ngForm" (ngSubmit)="next()">
+
+        <md-card class="card" *ngIf="verification">
+
+            <md-card-subtitle>Please Verify Confermation Code</md-card-subtitle>
+            <div id="confermationCode">
+                <md-input-container>
+                    <input type="text" mdInput placeholder="Confermation Code" [(ngModel)]="client.pin" name="pin" id="pin" pattern="[0-9]*" maxlength="6" required #pin="ngModel">
+                </md-input-container>
+
+                <div *ngIf="pin.invalid && pin.dirty">
+
+                    <div *ngIf="pin.errors.required" class="err">
+                        Pin is required.
+                    </div>
+
+                    <div *ngIf="pin.errors.pattern" class="err">
+                        Please Enter valid pin.
+                    </div>
+                </div>
+            </div>
+            <div class="text-center">
+                <button type="submit" md-raised-button id="getStart" [disabled]="!getStarted1.form.valid">Verify</button>
+            </div>
+        </md-card>
+
+    </form>
+
+    <form #getStarted2="ngForm" (ngSubmit)="next()">
+        <md-card class="card" *ngIf="setUsernamePassword">
+            <md-card-subtitle>Set Your Credentials</md-card-subtitle>
+
+            <div id="cardFields">
+                <div>
+                    <md-input-container>
+                        <input mdInput placeholder="Username" [(ngModel)]="employee.username" name="username" id="username" required pattern="^[^0-9].*" #username="ngModel">
+                    </md-input-container>
+
+                    <div *ngIf="username.invalid && username.dirty">
+
+                        <div *ngIf="username.errors.required" class="err">
+                            Username is required.
+                        </div>
+
+                        <div *ngIf="username.errors.pattern" class="err">
+                            Username can not start with Numerics.
+                        </div>
+
+                    </div>
+
+                </div>
+                <div>
+                    <md-input-container>
+                        <input mdInput placeholder="Passcode" type="password" [(ngModel)]="employee.password" name="passcode" id="passcode" minlength="10" pattern="[A-Za-z]{5,10}\d{5,10}" required #passcode="ngModel">
+                    </md-input-container>
+
+                    <div *ngIf="passcode.invalid && passcode.dirty">
+
+                        <div *ngIf="passcode.errors.required" class="err">
+                            Passcode is required.
+                        </div>
+
+                        <div *ngIf="passcode.errors.pattern" class="err">
+                            Incorrect Pattern ! <b style="color: navy;">Eg. walker12345</b>
+                        </div>
+
+                        <div *ngIf="passcode.errors.minlength" class="err">
+                            Please Set Minimum 10 Characters.
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="text-center">
+                <button type="submit" md-raised-button id="getStart" [disabled]="!getStarted2.form.valid">GET YOLO</button>
+            </div>
+
+        </md-card>
+
+    </form>
+
+</div>
