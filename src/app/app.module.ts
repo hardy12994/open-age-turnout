@@ -1,13 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { MaterialModule } from "@angular/material";
+import { MaterialModule, MdAutocompleteModule } from "@angular/material";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 import { AppRoutingModule, routingComponents } from './routings/router';
 import { SidebarModule } from 'ng-sidebar';
-
+import { CookToastModule } from 'cook-toast';
 
 //singleton services
 import {
@@ -36,6 +36,8 @@ import { MyUnderlineDirective } from './directives/my-underline.directive';
 import { MyIfDirective } from './directives/my-if.directive';
 import { RoleSpecifireDirective } from './directives/role-specifire.directive';
 import { ToasterService } from "app/services/toaster.service";
+import { InputDirective } from "app/directives/input.directive";
+import { SelectDirective } from "app/directives/select.directive";
 
 
 
@@ -45,9 +47,11 @@ import { ToasterService } from "app/services/toaster.service";
     BrowserModule,
     SidebarModule.forRoot(),
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     MaterialModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    CookToastModule
   ],
   declarations: [
     routingComponents,
@@ -64,10 +68,12 @@ import { ToasterService } from "app/services/toaster.service";
     MyHiddenDirective,
     MyUnderlineDirective,
     MyIfDirective,
-    RoleSpecifireDirective
+    RoleSpecifireDirective,
+    InputDirective,
+    SelectDirective
   ],
   providers: [
-    AuthGuard,UserGuard,
+    AuthGuard, UserGuard,
     ToasterService,
     AppSettingsService
   ],

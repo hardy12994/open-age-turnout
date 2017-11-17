@@ -19,3 +19,15 @@
     width: 100px;
     height: 100px;
 }
+
+.formInputs {
+    width: 50%
+}
+
+.err {
+    color: rgb(208, 2, 27);
+}
+
+.requiredStar {
+    color: rgb(208, 2, 27);
+}

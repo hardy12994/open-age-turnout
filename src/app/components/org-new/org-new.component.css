@@ -1,4 +1,74 @@
 .margin {
-    margin: 20px;
+    margin: 20px 55px 20px 0px;
     border: 1px solid lightgray;
+}
+
+.form {
+    margin-bottom: 20px;
+    margin-right: 25px;
+}
+
+.mdWidth {
+    width: 40%;
+    /*margin: 10px;*/
+}
+
+.rowMargin {
+    margin: 20px;
+}
+
+.space {
+    margin-left: 30px;
+}
+
+.space15px {
+    margin-left: 15px;
+}
+
+.topMargin {
+    margin-top: 50px;
+}
+
+.btn {
+    font-size: 17px;
+    text-align: center;
+    margin: 20px 0px 20px 0px;
+    padding: 0px 50px 0px 50px;
+    background-color: #262626;
+    color: wheat;
+    /*border-radius: 5px;*/
+    border-style: solid;
+    /*border-color: #00b8e6;*/
+    border-color: #262626;
+}
+
+.saveBtn {
+    margin-right: 50px
+}
+
+.options {
+    color: #262626;
+    font-size: 13px;
+}
+
+
+/*option.options:hover {
+    background-color: #262626;
+}*/
+
+select.decorated option:hover {
+    box-shadow: 0 0 10px 100px #262626 inset;
+}
+
+select {
+    appearance: none;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    background: url(../../../assets/images/icon_select.png) center right no-repeat;
+    border-left: transparent;
+    border-top: transparent;
+    border-right: transparent;
+    outline: none;
+    /*font-weight: bold;*/
+    color: #a6a6a6;
 }

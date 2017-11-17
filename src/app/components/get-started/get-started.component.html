@@ -1,5 +1,4 @@
-<p *toast="toasterService.type" id="toast">
-    {{toasterService.message}}</p>
+<span *cook-toast="5; bottom:true; left:true;" id="toast"></span>
 
 <md-spinner *ngIf="this.appSettings.isLoading" mode="indeterminate"></md-spinner>
 <div>
@@ -125,7 +124,8 @@
                         </div>
 
                         <div *ngIf="passcode.errors.pattern" class="err">
-                            Incorrect Pattern ! <b style="color: navy;">Eg. walker12345</b>
+                            Incorrect Pattern !
+                            <b style="color: navy;">Eg. walker12345</b>
                         </div>
 
                         <div *ngIf="passcode.errors.minlength" class="err">

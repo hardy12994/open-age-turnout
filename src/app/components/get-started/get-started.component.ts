@@ -5,7 +5,7 @@ import { ClientService } from "app/services";
 import { AppSettingsService, LoginService } from 'app/services'
 import { ToasterService } from "app/services/toaster.service";
 import { OnChanges, SimpleChanges } from '@angular/core';
-
+import { KitchenService } from "cook-toast";
 @Component({
   selector: 'app-get-started',
   templateUrl: './get-started.component.html',
@@ -22,14 +22,15 @@ export class GetStartedComponent implements OnInit {
 
   private client: Client = new Client();
   private employee: Employee = new Employee();
-  
+
   constructor(
     private clientService: ClientService,
     private loginService: LoginService,
     private router: Router,
     public appSettings: AppSettingsService,
-    public toasterService: ToasterService) {
+    public kitchenService: KitchenService) {
     this.default();
+    this.kitchenService.cook('Please Sign Up in YOLO :)', 'i');
   }
 
   ngOnInit() {
@@ -58,9 +59,9 @@ export class GetStartedComponent implements OnInit {
         this.client = data.data;
         this.getStart = false;
         this.verification = true;
-        this.toasterService.set('Please Confirm your OTP', 'i');
+        this.kitchenService.cook('Please Confirm your OTP', 'i');
       })
-      .catch(err => this.toasterService.set(err, 'f'))
+      .catch(err => this.kitchenService.cook(err, 'f'))
   }
 
 
@@ -72,9 +73,9 @@ export class GetStartedComponent implements OnInit {
         }
         this.verification = false;
         this.setUsernamePassword = true;
-        this.toasterService.set('Please Set your Username and Passcode', 'i');
+        this.kitchenService.cook('Please Set your Username and Passcode', 'i');
       })
-      .catch(err => this.toasterService.set(err, 'f'))
+      .catch(err => this.kitchenService.cook(err, 'f'))
   }
 
   createEmployee() {
@@ -88,7 +89,7 @@ export class GetStartedComponent implements OnInit {
         window.localStorage.setItem("token", this.employee.token);
         return this.dashCall();
       })
-      .catch(err => this.toasterService.set(err, 'f'))
+      .catch(err => this.kitchenService.cook(err, 'f'))
   }
 
 

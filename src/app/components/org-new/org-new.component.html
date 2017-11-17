@@ -1,25 +1,181 @@
 <div class="margin">
-    <div class="text-center">
-        <h5><b>Add Organization</b></h5>
-    </div>
-    <div>
-        <div class="container">
-            <form action="/action_page.php">
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
-                </div>
-                <div class="form-group">
-                    <label for="pwd">Password:</label>
-                    <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pwd">
-                </div>
-                <div class="checkbox">
-                    <label><input type="checkbox" name="remember"> Remember me</label>
-                </div>
-                <button type="submit" class="btn btn-default">Submit</button>
-            </form>
-        </div>
-    </div>
+    <form [formGroup]="orgnizationForm" (submit)="save()">
+        <md-card>
+            <div class="text-left" style="padding-bottom: 50px;">
+                <h5 style="color: #262626;"><b>ADD ORGANIZATION :-</b></h5>
+            </div>
+            <div>
 
+                <div class="row rowMargin">
+
+
+                    <div class=" col-md-offset-1 col-md-2">
+                        <label for="name">Organization Name:</label>
+
+                    </div>
+
+                    <div class="col-md-offset-1 col-md-8">
+
+
+                        <input type="text" yolo-input placeholder="Enter Name" class="mdWidth" name="name" id="name" required formControlName="name">
+
+                        <span *ngIf="name.invalid && (name.dirty || name.touched)" class="err space15px">
+                        <span *ngIf="name.errors.required"> Name is required.</span>
+                        <span *ngIf="name.errors.minlength">
+                            Name must be at least 3 characters long.
+                        </span>
+                        </span>
+
+                    </div>
+                </div>
+
+
+                <div class="row rowMargin">
+
+                    <div class=" col-md-offset-1 col-md-2">
+                        <label for="phone">Phone Number:</label>
+
+
+                    </div>
+                    <div class="col-md-offset-1 col-md-8">
+
+                        <input yolo-input class="mdWidth" placeholder="Enter Phone" name="phone" id="phone" required formControlName="phone" numeric>
+
+                        <span *ngIf="phone.invalid && (phone.dirty || phone.touched)" class="err space15px">
+
+                        <span *ngIf="phone.errors.required">
+                            Phone is required.
+                        </span>
+                        <span *ngIf="phone.errors.pattern"> Please enter correct Phone Number</span>
+                        </span>
+                    </div>
+                </div>
+
+
+                <div class="row rowMargin">
+
+
+                    <div class=" col-md-offset-1 col-md-2">
+                        <label for="name">Address Line 1:</label>
+                    </div>
+                    <div class="col-md-offset-1 col-md-8">
+
+                        <input yolo-input class="mdWidth" placeholder="Address Line 1" name="address_1" id="address_1" required formControlName="address_1" (change)="onChange($event)">
+                        <span *ngIf="address_1.invalid && (address_1.dirty || address_1.touched)" class="err space15px">
+                <span *ngIf="address_1.errors.required">Address is required.</span>
+                        </span>
+
+
+                    </div>
+                </div>
+
+
+                <div class="row rowMargin">
+                    <div class=" col-md-offset-1 col-md-2">
+                        <label for="name">Address Line 2:</label>
+                    </div>
+                    <div class="col-md-offset-1 col-md-8">
+                        <input yolo-input class="mdWidth" placeholder="Address Line 2" name="address_2" id="address_2" formControlName="address_2">
+                    </div>
+                </div>
+
+
+                <div class="row rowMargin">
+                    <div class=" col-md-offset-1 col-md-2">
+                        <label for="name">State:</label>
+                    </div>
+                    <div class="col-md-offset-1 col-md-8">
+                        <select class="mdWidth" placeholder="Select State" name="state" id="state" required formControlName="state">
+                      
+                        <option value="">Please select State...</option>
+                        <option *ngFor="let option of indiaPlaces.states" class="options" [value]="option.name">{{ option.name +' - '+ option.key}}</option>
+                    </select>
+                        <span *ngIf="state.invalid && (state.dirty || state.touched)" class="err space15px">
+                        
+                            <span *ngIf="state.errors.required">State is required.</span>
+
+                        </span>
+
+                    </div>
+                </div>
+
+
+                <div class="row rowMargin">
+
+
+                    <div class=" col-md-offset-1 col-md-2">
+                        <label for="name">City:</label>
+
+
+
+                    </div>
+                    <div class="col-md-offset-1 col-md-8">
+
+                        <select yoloSelector class="mdWidth" placeholder="Select City" name="city" id="city" required formControlName="city">
+
+                      <option value="">Please select City...</option>
+                      <option *ngFor="let option of cities" class="options" [value]="option.name">{{ option.name }} </option>
+                    </select>
+                        <span *ngIf="city.invalid && (city.dirty || city.touched)" class="err space15px">
+                        
+                            <span *ngIf="city.errors.required">City is required.</span>
+
+                        </span>
+
+
+                    </div>
+                </div>
+
+
+                <div class="row rowMargin">
+
+
+                    <div class=" col-md-offset-1 col-md-2">
+                        <label for="name">Pincode:</label>
+                    </div>
+                    <div class="col-md-offset-1 col-md-8">
+                        <input yolo-input class="mdWidth" placeholder="Enter Pincode" name="pincode" id="pincode" required formControlName="pincode" numeric>
+                        <span *ngIf="pincode.invalid && (pincode.dirty || pincode.touched)" class="err space15px">
+                        
+                            <span *ngIf="pincode.errors.required">Pincode is Required.</span>
+                        <span *ngIf="pincode.errors.pinExist===false">Pincode is Invalid.</span>
+                        <span *ngIf="pincode.errors.minlength">Enter Minimum 6 digits.</span>
+
+                        </span>
+                    </div>
+                </div>
+
+
+                <div class="row rowMargin">
+
+                    <div class=" col-md-offset-1 col-md-2">
+                        <label for="name">Upload Picture:</label>
+                    </div>
+                    <div class="col-md-offset-1 col-md-8">
+                        <input yolo-input class="mdWidth" placeholder="Upload Image" required>
+                    </div>
+                </div>
+
+
+
+                <div class="row topMargin">
+                    <div class="col-md-4">
+                        <div class="pull-right">
+                            <button type="submit" class="btn saveBtn" md-raised-button> Save </button>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                    </div>
+                    <div class="col-md-4">
+                        <button class="btn" md-raised-button>Cancel</button>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+        </md-card>
+    </form>
 
 </div>

@@ -43,7 +43,9 @@ const homeChilds: Routes = [
 
 const appRoutes: Routes = [
     { path: 'home', component: HomeComponent, children: homeChilds },
-    { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard], children: dashChilds },
+    { path: 'dashboard', component: DashboardComponent,
+    //  canActivate: [AuthGuard],
+     children: dashChilds },
     { path: '', pathMatch: 'full', redirectTo: 'home' }
     // { path: '**', component: NotFound404Component }
 ];

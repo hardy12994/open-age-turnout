@@ -9,16 +9,16 @@ export class DashboardComponent implements OnInit {
 
 
 
-loggedIn:string="Hardy";
-   _opened: boolean = true;
+  loggedIn: string = "Hardy";
+  _opened: boolean = true;
 
-   _toggleSidebar() {
+  _toggleSidebar() {
     this._opened = !this._opened;
   }
 
   constructor() {
     console.log('dashboard wooorrrrrrrrrrrrrrrks');
-   }
+  }
 
   ngOnInit() {
   }
